@@ -35,26 +35,29 @@ def raw_data():
     asking after every 5 if they want to see more
     """
 
+    raw = input('Do you want to see the raw data (yes/no)?')
     while True:
-        raw = input('Do you want to see the raw data (yes/no)?')
+
         if raw.lower() == 'yes':
             i=0
+            print(df.loc[i:i+4])
             for num in range(0,len(df.index)):
-                print(df.loc[i:i+4])
-#######
                 more_data = input('Do you want to see more data (yes/no)?')
                 if more_data.lower() == 'yes':
                     i+=5
+                    print(df.loc[i:i+4])
                 elif more_data.lower() == 'no':
                     break
-####wrong_ input()
+                else:
+                    wrong_input()
+
             break
         elif raw.lower() == 'no':
             break
         else:
             wrong_input()
 
-# raw_data()
+raw_data()
 
 def restart():
     """ asks if program should be restarted and triggers restart if required """
@@ -69,7 +72,7 @@ def restart():
         else:
             break
 
-restart()
+# restart()
 
 
 # restart = input('\nWould you like to restart? Enter yes or no.\n')

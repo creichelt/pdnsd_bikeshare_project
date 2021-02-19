@@ -41,9 +41,10 @@ def get_filters():
         else:
             wrong_input()
 
-    # get user input for city (chicago, new york city, washington)
+
+
+    # get user input for month (all, january, february, ... , june)
     while True:
-        # get user input for month (all, january, february, ... , june)
         month = input("Please choose a month (January, February, March, April, May, June, or 'all'):")
         if month.lower()  in ('january', 'february', 'march', 'april', 'may', 'june', 'all'):
             print('')
@@ -185,22 +186,25 @@ def user_stats(df):
 def raw_data(df):
     """
     Asks if user wants to see the raw data and returns data in sets of 5,
-    asking after every 5 if they want to see more
+    asking after every 5 results if they want to see more
     """
 
+    raw = input('Do you want to see the raw data (yes/no)?')
     while True:
-        raw = input('Do you want to see the raw data (yes/no)?')
+
         if raw.lower() == 'yes':
             i=0
+            print(df.loc[i:i+4])
             for num in range(0,len(df.index)):
-                print(df.loc[i:i+4])
-#######
                 more_data = input('Do you want to see more data (yes/no)?')
                 if more_data.lower() == 'yes':
                     i+=5
+                    print(df.loc[i:i+4])
                 elif more_data.lower() == 'no':
                     break
-####wrong_ input()
+                else:
+                    wrong_input()
+
             break
         elif raw.lower() == 'no':
             break
