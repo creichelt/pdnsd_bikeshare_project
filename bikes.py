@@ -10,15 +10,6 @@ def wrong_input():
     """ outputs info before loop restarts, if user enters incorrect input """
     print("\nThat's not a valid choice.\n")
 
-
-def timestamp():
-    """ outputs runtime at the end of a function """
-    start_time = time.time()
-
-    print("\nThis took %s seconds." % (time.time() - start_time))
-    print("-"*41)
-
-
 def get_filters():
     """
     Asks user to specify a city, month, and day to analyze.
@@ -41,8 +32,6 @@ def get_filters():
         else:
             wrong_input()
 
-
-
     # get user input for month (all, january, february, ... , june)
     while True:
         month = input("Please choose a month (January, February, March, April, May, June, or 'all'):")
@@ -63,7 +52,6 @@ def get_filters():
 
     print("-"*41)
     return city.lower(), month.lower(), day.lower()
-
 
 def load_data(city, month, day):
     """
@@ -103,7 +91,6 @@ def load_data(city, month, day):
 
     return df
 
-
 def time_stats(df):
     """Displays statistics on the most frequent times of travel."""
 
@@ -117,8 +104,8 @@ def time_stats(df):
     # display the most common start hour
     print("Most common start hour:", df['hour'].mode()[0])
 
-    timestamp()
-
+    print("\nThis took %s seconds." % (time.time() - start_time))
+    print("-"*41)
 
 def station_stats(df):
     """Displays statistics on the most popular stations and trip."""
@@ -135,8 +122,8 @@ def station_stats(df):
     # display most frequent combination of start station and end station trip
     print("The most common trip is:", df.groupby(['Start Station', 'End Station']).size().idxmax())
 
-    timestamp()
-
+    print("\nThis took %s seconds." % (time.time() - start_time))
+    print("-"*41)
 
 def trip_duration_stats(df):
     """Displays statistics on the total and average trip duration."""
@@ -150,8 +137,8 @@ def trip_duration_stats(df):
     # display mean travel time
     print("Mean travel time:", df['Trip Duration'].mean())
 
-    timestamp()
-
+    print("\nThis took %s seconds." % (time.time() - start_time))
+    print("-"*41)
 
 def user_stats(df):
     """Displays statistics on bikeshare users."""
@@ -180,8 +167,8 @@ def user_stats(df):
     except:
         print("There is no Birth Year info for", city.capitalize())
 
-    timestamp()
-
+    print("\nThis took %s seconds." % (time.time() - start_time))
+    print("-"*41)
 
 def raw_data(df):
     """
@@ -191,7 +178,6 @@ def raw_data(df):
 
     raw = input('Do you want to see the raw data (yes/no)?')
     while True:
-
         if raw.lower() == 'yes':
             i=0
             print(df.loc[i:i+4])
@@ -204,13 +190,11 @@ def raw_data(df):
                     break
                 else:
                     wrong_input()
-
             break
         elif raw.lower() == 'no':
             break
         else:
             wrong_input()
-
 
 def main():
     while True:

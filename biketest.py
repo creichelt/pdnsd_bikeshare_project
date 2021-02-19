@@ -29,50 +29,22 @@ def wrong_input():
     """ outputs info before loop restarts, if user enters incorrect input """
     print("\nThat's not a valid choice.\n")
 
-def raw_data():
-    """
-    Asks if user wants to see the raw data and returns data in sets of 5,
-    asking after every 5 if they want to see more
-    """
 
-    raw = input('Do you want to see the raw data (yes/no)?')
-    while True:
-
-        if raw.lower() == 'yes':
-            i=0
-            print(df.loc[i:i+4])
-            for num in range(0,len(df.index)):
-                more_data = input('Do you want to see more data (yes/no)?')
-                if more_data.lower() == 'yes':
-                    i+=5
-                    print(df.loc[i:i+4])
-                elif more_data.lower() == 'no':
-                    break
-                else:
-                    wrong_input()
-
-            break
-        elif raw.lower() == 'no':
-            break
-        else:
-            wrong_input()
-
-raw_data()
 
 def restart():
     """ asks if program should be restarted and triggers restart if required """
+    restart = input('\nWould you like to restart? Enter yes or no.\n')
     while True:
-        restart = input('\nWould you like to restart? Enter yes or no.\n')
         if restart.lower() in ('yes','no'):
             if restart.lower() == 'yes':
                 break
             else:
-                False
                 print("bye")
+                False
         else:
             break
 
-# restart()
+restart()
 
 
 # restart = input('\nWould you like to restart? Enter yes or no.\n')
@@ -84,7 +56,9 @@ def restart():
 ######## TO DO
 
 # filter: by month or day or not at all
-# display raw data 5 entries at a time with question to quit
+# fix restart function
+# fix month name outputs
+# fix gender sorting
 
 
 """
@@ -118,3 +92,11 @@ while True:
 
 return city.lower(), month.lower(), day.lower()
 """
+
+
+# def timestamp(start_time):
+#     """ outputs runtime at the end of a function """
+#     # start_time = time.time()
+#
+#     print("\nThis took %s seconds." % (time.time() - start_time))
+#     print("-"*41)
