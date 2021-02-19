@@ -146,24 +146,24 @@ def user_stats(df):
     print("\nCalculating User Stats...\n")
     start_time = time.time()
 
-    #removing rows with NaN from DataFrame
-    df2 = df.dropna(axis=0)
-
     # display counts of gender
     try:
-        print("Gender types:")
+        print("Gender information:")
         print(df['Gender'].fillna('no info').value_counts().to_string())
         print("")
     except:
         print("There is no gender info for", city.capitalize())
         print("")
 
+    # removing rows with NaN from DataFrame
+    df = df.dropna(axis=0)
+
     # display earliest, most recent, and most common year of birth
     try:
         print("Age information:")
-        print("The most recent Birth Year is:", int(df2['Birth Year'].max()))
-        print("The most earliest Birth Year is:", int(df2['Birth Year'].min()))
-        print("The most common Birth Year is:", int(df2['Birth Year'].mode()))
+        print("The most recent Birth Year is:", int(df['Birth Year'].max()))
+        print("The most earliest Birth Year is:", int(df['Birth Year'].min()))
+        print("The most common Birth Year is:", int(df['Birth Year'].mode()))
     except:
         print("There is no Birth Year info for", city.capitalize())
 
