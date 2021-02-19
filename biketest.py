@@ -25,44 +25,56 @@ df['month'] = df['Start Time'].dt.month
 df['weekday'] = df['Start Time'].dt.weekday
 df['hour'] = df['Start Time'].dt.hour
 
+def wrong_input():
+    """ outputs info before loop restarts, if user enters incorrect input """
+    print("\nThat's not a valid choice.\n")
 
-# display the most common month
-print("Most common month:", df['month'].mode()[0])
-# display the most common day of week
-print("Most common day:", df['weekday'].mode()[0])
-# display the most common start hour
-print("Most common start hour:", df['hour'].mode()[0])
+def raw_data():
+    """
+    Asks if user wants to see the raw data and returns data in sets of 5,
+    asking after every 5 if they want to see more
+    """
 
-# display most commonly used start station
-print("The most common Start Station is:", df['Start Station'].value_counts().idxmax())
-# display most commonly used end station
-print("The most common End Station is:", df['End Station'].value_counts().idxmax())
-# display most frequent combination of start station and end station trip
-print("The most common trip is:", df.groupby(['Start Station', 'End Station']).size().idxmax())
+    while True:
+        raw = input('Do you want to see the raw data (yes/no)?')
+        if raw.lower() == 'yes':
+            i=0
+            for num in range(0,len(df.index)):
+                print(df.loc[i:i+4])
+#######
+                more_data = input('Do you want to see more data (yes/no)?')
+                if more_data.lower() == 'yes':
+                    i+=5
+                elif more_data.lower() == 'no':
+                    break
+####wrong_ input()
+            break
+        elif raw.lower() == 'no':
+            break
+        else:
+            wrong_input()
 
-# display total travel time
-print("Total travel time:", df['Trip Duration'].sum())
-# display mean travel time
-print("Mean travel time:", df['Trip Duration'].mean())
+# raw_data()
 
-# display counts of user types
-print("User types:")
-print(df['User Type'].value_counts().to_string())
-# display counts of gender
-try:
-    print("Gender types:")
-    print(df['Gender'].fillna('no info').value_counts().to_string())
-except:
-    print("There is no gender info for", city.capitalize())
+def restart():
+    """ asks if program should be restarted and triggers restart if required """
+    while True:
+        restart = input('\nWould you like to restart? Enter yes or no.\n')
+        if restart.lower() in ('yes','no'):
+            if restart.lower() == 'yes':
+                break
+            else:
+                False
+                print("bye")
+        else:
+            break
 
-# display earliest, most recent, and most common year of birth
-try:
-    print("The most recent Birth Year is:", int(df3['Birth Year'].max()))
-    print("The most earliest Birth Year is:", int(df3['Birth Year'].min()))
-    print("The most common Birth Year is:", int(df3['Birth Year'].mode()))
-except:
-    print("There is no Birth Year info for", city.capitalize())
+restart()
 
+
+# restart = input('\nWould you like to restart? Enter yes or no.\n')
+# if restart.lower() != 'yes':
+#     break
 
 
 

@@ -8,15 +8,13 @@ CITY_DATA = { 'chicago': 'chicago.csv',
 
 def wrong_input():
     """ outputs info before loop restarts, if user enters incorrect input """
-    print("")
-    print("That's not a valid choice.")
-    print("")
+    print("\nThat's not a valid choice.\n")
 
 
 def timestamp():
-    start_time = time.time()
     """ outputs runtime at the end of a function """
-    print("")
+    start_time = time.time()
+
     print("\nThis took %s seconds." % (time.time() - start_time))
     print("-"*41)
 
@@ -181,10 +179,33 @@ def user_stats(df):
     except:
         print("There is no Birth Year info for", city.capitalize())
 
-    # print('')
-    # print("\nThis took %s seconds." % (time.time() - start_time))
-    # print('-'*40)
     timestamp()
+
+
+def raw_data(df):
+    """
+    Asks if user wants to see the raw data and returns data in sets of 5,
+    asking after every 5 if they want to see more
+    """
+
+    while True:
+        raw = input('Do you want to see the raw data (yes/no)?')
+        if raw.lower() == 'yes':
+            i=0
+            for num in range(0,len(df.index)):
+                print(df.loc[i:i+4])
+#######
+                more_data = input('Do you want to see more data (yes/no)?')
+                if more_data.lower() == 'yes':
+                    i+=5
+                elif more_data.lower() == 'no':
+                    break
+####wrong_ input()
+            break
+        elif raw.lower() == 'no':
+            break
+        else:
+            wrong_input()
 
 
 def main():
@@ -196,11 +217,11 @@ def main():
         station_stats(df)
         trip_duration_stats(df)
         user_stats(df)
+        raw_data(df)
 
         restart = input("\nWould you like to restart? Enter yes or no.\n")
         if restart.lower() != 'yes':
             break
-
 
 if __name__ == "__main__":
 	main()
