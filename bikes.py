@@ -196,8 +196,24 @@ def raw_data(df):
         else:
             wrong_input()
 
+def restart():
+    """ asks if program should be restarted and triggers restart if required """
+
+    restart = input('\nWould you like to restart? Enter yes or no.\n')
+    while True:
+        if restart.lower() == 'yes':
+            break
+        elif restart.lower() == 'no':
+            print("bye")
+            return
+        else:
+            wrong_input()
+    return
+
+
 def main():
     while True:
+        print('restarting, asking for input....')
         city, month, day = get_filters()
         df = load_data(city, month, day)
 
@@ -206,10 +222,14 @@ def main():
         trip_duration_stats(df)
         user_stats(df)
         raw_data(df)
-
-        restart = input("\nWould you like to restart? Enter yes or no.\n")
-        if restart.lower() != 'yes':
+        restart = input('\nWould you like to restart? Enter yes or no.\n')
+        if restart.lower() == 'yes':
+            pass
+        elif restart.lower() == 'no':
+            print("bye")
             break
+        else:
+            wrong_input()
 
 if __name__ == "__main__":
 	main()
