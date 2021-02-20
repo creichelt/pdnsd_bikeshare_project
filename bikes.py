@@ -11,14 +11,14 @@ def wrong_input():
     print("\nThat's not a valid choice.\n")
 
 def get_filters():
-    # while True:
-    #     city = input('Please choose a city: Chicago, New York City, or Washington:')
-    #     if city.lower() in ('chicago', 'new york city', 'washington'):
-    #         print('')
-    #         break
-    #     else:
-    #         wrong_input()
-    city='chicago'
+    while True:
+        city = input('Please choose a city: Chicago, New York City, or Washington:')
+        if city.lower() in ('chicago', 'new york city', 'washington'):
+            print('')
+            break
+        else:
+            wrong_input()
+
     while True:
         choice = input("Would you like to filter by month, day, or not at all (month/day/none)?")
         if choice.lower() == 'month':
@@ -209,10 +209,8 @@ def main():
         station_stats(df)
         trip_duration_stats(df)
         user_stats(df)
+        raw_data(pd.read_csv(CITY_DATA[city]))
 
-        df = pd.read_csv(CITY_DATA[city])
-        raw_data(df)
-        
         restart = input('\nWould you like to restart (yes/no)?')
         if restart.lower() == 'yes':
             pass
