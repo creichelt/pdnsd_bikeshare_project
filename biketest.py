@@ -29,8 +29,8 @@ def wrong_input():
 ######## TO DO
 
 # filter: by month or day or not at all
-# fix restart function
-# fix month name outputs
+# if not all months/days, filter time stats function
+
 # fix gender sorting
 # fix city reference in gender (WAS only)
 

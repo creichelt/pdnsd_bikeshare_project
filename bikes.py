@@ -94,6 +94,25 @@ def load_data(city, month, day):
 def time_stats(df):
     """Displays statistics on the most frequent times of travel."""
 
+    months = { 1: 'January',
+            2: 'February',
+            3: 'March',
+            4: 'April',
+            5: 'May',
+            6: 'June' }
+
+    day_of_week = { 0: 'Monday',
+              1: 'Tuesday',
+              2: 'Wednesday',
+              3: 'Thursday',
+              4: 'Friday',
+              5: 'Saturday',
+              6: 'Sunday' }
+
+    # converting integer to name output for days of the week & months
+    df['month'] = df['Start Time'].dt.month.map(months)
+    df['weekday'] = df['Start Time'].dt.dayofweek.map(day_of_week)
+
     print('\nCalculating The Most Frequent Times of Travel...\n')
     start_time = time.time()
 
@@ -196,36 +215,21 @@ def raw_data(df):
         else:
             wrong_input()
 
-def restart():
-    """ asks if program should be restarted and triggers restart if required """
-
-    restart = input('\nWould you like to restart? Enter yes or no.\n')
-    while True:
-        if restart.lower() == 'yes':
-            break
-        elif restart.lower() == 'no':
-            print("bye")
-            return
-        else:
-            wrong_input()
-    return
-
-
 def main():
     while True:
         city, month, day = get_filters()
         df = load_data(city, month, day)
 
-        # time_stats(df)
+        time_stats(df)
         # station_stats(df)
         # trip_duration_stats(df)
-        user_stats(df)
+        # user_stats(df)
         # raw_data(df)
-        restart = input('\nWould you like to restart? Enter yes or no.\n')
+        restart = input('\nWould you like to restart (yes/no)?')
         if restart.lower() == 'yes':
             pass
         elif restart.lower() == 'no':
-            print("bye")
+            print("\nThanks for using. Goodbye!\n")
             break
         else:
             wrong_input()
