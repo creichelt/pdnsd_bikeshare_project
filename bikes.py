@@ -11,46 +11,37 @@ def wrong_input():
     print("\nThat's not a valid choice.\n")
 
 def get_filters():
-    """
-    Asks user to specify a city, month, and day to analyze.
-
-    Returns:
-        (str) city - name of the city to analyze
-        (str) month - name of the month to filter by, or "all" to apply no month filter
-        (str) day - name of the day of week to filter by, or "all" to apply no day filter
-    """
-    print("")
-    print("Hello! Let's explore some US bikeshare data!")
-    print("")
-
-    # get user input for city (chicago, new york city, washington)
+    # while True:
+    #     city = input('Please choose a city: Chicago, New York City, or Washington:')
+    #     if city.lower() in ('chicago', 'new york city', 'washington'):
+    #         print('')
+    #         break
+    #     else:
+    #         wrong_input()
+    city='chicago'
     while True:
-        city = input('Please choose a city: Chicago, New York City, or Washington:')
-        if city.lower() in ('chicago', 'new york city', 'washington'):
-            print('')
+        choice = input("Would you like to filter by month, day, or not at all (month/day/none)?")
+        if choice.lower() == 'month':
+            month = input("Please choose a month (January, February, March, April, May, June, or 'all'):")
+            if month.lower() in ('january', 'february', 'march', 'april', 'may', 'june', 'all'):
+                day = 'all'
+                break
+            else:
+                wrong_input()
+        elif choice.lower() == 'day':
+            day = input("Please choose a day of the week: (Monday, Tuesday, Wednesday, ..., or 'all'):")
+            if day.lower() in ('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'all'):
+                month = 'all'
+                break
+            else:
+                wrong_input()
+        elif choice.lower() == 'none':
+            month = 'all'
+            day = 'all'
             break
         else:
             wrong_input()
 
-    # get user input for month (all, january, february, ... , june)
-    while True:
-        month = input("Please choose a month (January, February, March, April, May, June, or 'all'):")
-        if month.lower()  in ('january', 'february', 'march', 'april', 'may', 'june', 'all'):
-            print('')
-            break
-        else:
-            wrong_input()
-
-    # get user input for day of week (all, monday, tuesday, ... sunday)
-    while True:
-        day = input("Please choose a day of the week: (Monday, Tuesday, Wednesday, ..., or 'all'):")
-        if day.lower()  in ('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'all'):
-            print('')
-            break
-        else:
-            wrong_input()
-
-    print("-"*41)
     return city.lower(), month.lower(), day.lower()
 
 def load_data(city, month, day):
@@ -70,25 +61,26 @@ def load_data(city, month, day):
     # convert the Start Time column to datetime
     df['Start Time'] = pd.to_datetime(df['Start Time'])
 
-    # extract month and day of week from Start Time to create new columns
+    # extract month and day of week and hour of the day from Start Time to create new columns
     df['month'] = df['Start Time'].dt.month
-    df['weekday'] = df['Start Time'].dt.weekday
+    df['weekday'] = df['Start Time'].dt.day_name()
     df['hour'] = df['Start Time'].dt.hour
 
     # filter by month if applicable
-    # if month != 'all':
-    #     # use the index of the months list to get the corresponding int
-    #     months = ['january', 'february', 'march', 'april', 'may', 'june']
-    #     month = months.index(month) + 1
-    #
-    #     # filter by month to create the new dataframe
-    #     df = df[df['month'] == month]
-    #
-    # # filter by day of week if applicable
-    # if day != 'all':
-    #     # filter by day of week to create the new dataframe
-    #     df = df[df['day_of_week'] == day.title()]
+    if month != 'all':
+        # use the index of the months list to get the corresponding int
+        months = ['january', 'february', 'march', 'april', 'may', 'june']
+        month = months.index(month) + 1
 
+        # filter by month to create the new dataframe
+        df = df[df['month'] == month]
+
+    # filter by day of week if applicable
+    if day != 'all':
+        # filter by day of week to create the new dataframe
+        df = df[df['weekday'] == day.title()]
+
+    print("-"*40)
     return df
 
 def time_stats(df):
@@ -101,30 +93,23 @@ def time_stats(df):
             5: 'May',
             6: 'June' }
 
-    day_of_week = { 0: 'Monday',
-              1: 'Tuesday',
-              2: 'Wednesday',
-              3: 'Thursday',
-              4: 'Friday',
-              5: 'Saturday',
-              6: 'Sunday' }
-
-    # converting integer to name output for days of the week & months
+    # converting integer to name for output of months
     df['month'] = df['Start Time'].dt.month.map(months)
-    df['weekday'] = df['Start Time'].dt.dayofweek.map(day_of_week)
 
     print('\nCalculating The Most Frequent Times of Travel...\n')
     start_time = time.time()
 
     # display the most common month
     print("Most common month:", df['month'].mode()[0])
+
     # display the most common day of week
     print("Most common day:", df['weekday'].mode()[0])
+
     # display the most common start hour
     print("Most common start hour:", df['hour'].mode()[0])
 
     print("\nThis took %s seconds." % (time.time() - start_time))
-    print("-"*41)
+    print("-"*40)
 
 def station_stats(df):
     """Displays statistics on the most popular stations and trip."""
@@ -142,7 +127,7 @@ def station_stats(df):
     print("The most common trip is:", df.groupby(['Start Station', 'End Station']).size().idxmax())
 
     print("\nThis took %s seconds." % (time.time() - start_time))
-    print("-"*41)
+    print("-"*40)
 
 def trip_duration_stats(df):
     """Displays statistics on the total and average trip duration."""
@@ -157,7 +142,7 @@ def trip_duration_stats(df):
     print("Mean travel time:", df['Trip Duration'].mean())
 
     print("\nThis took %s seconds." % (time.time() - start_time))
-    print("-"*41)
+    print("-"*40)
 
 def user_stats(df):
     """Displays statistics on bikeshare users."""
@@ -187,7 +172,7 @@ def user_stats(df):
         print("There is no Birth Year info")
 
     print("\nThis took %s seconds." % (time.time() - start_time))
-    print("-"*41)
+    print("-"*40)
 
 def raw_data(df):
     """
@@ -221,10 +206,13 @@ def main():
         df = load_data(city, month, day)
 
         time_stats(df)
-        # station_stats(df)
-        # trip_duration_stats(df)
-        # user_stats(df)
-        # raw_data(df)
+        station_stats(df)
+        trip_duration_stats(df)
+        user_stats(df)
+
+        df = pd.read_csv(CITY_DATA[city])
+        raw_data(df)
+        
         restart = input('\nWould you like to restart (yes/no)?')
         if restart.lower() == 'yes':
             pass

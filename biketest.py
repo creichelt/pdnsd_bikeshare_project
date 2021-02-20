@@ -21,56 +21,87 @@ def wrong_input():
     """ outputs info before loop restarts, if user enters incorrect input """
     print("\nThat's not a valid choice.\n")
 
+def month_choice():
+    while True:
+        month = input("Please choose a month (January, February, March, April, May, June, or 'all'):")
+        if month.lower() in ('january', 'february', 'march', 'april', 'may', 'june', 'all'):
+            return month.lower()
+        else:
+            wrong_input()
+
+def day_choice():
+    while True:
+        day = input("Please choose a day of the week: (Monday, Tuesday, Wednesday, ..., or 'all'):")
+        if day.lower() in ('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'all'):
+            return day.lower()
+        else:
+            wrong_input()
+
+def choose():
+    choice = input("Would you like to filter by month, day, or not at all (month/day/none)?")
+    if choice.lower() == 'month':
+        month_choice()
+    elif choice.lower() == 'day':
+        day_choice()
+    elif choice.lower() == 'none':
+        month = 'all'
+        day = 'all'
+
+# choose()
 
 
 
+
+
+
+def get_filters():
+    """
+    Asks user to specify a city, month, and day to analyze.
+
+    Returns:
+        (str) city - name of the city to analyze
+        (str) month - name of the month to filter by, or "all" to apply no month filter
+        (str) day - name of the day of week to filter by, or "all" to apply no day filter
+    """
+    print("")
+    print("Hello! Let's explore some US bikeshare data!")
+    print("")
+
+    # get user input for city (chicago, new york city, washington)
+    while True:
+        city = input('Please choose a city: Chicago, New York City, or Washington:')
+        if city.lower() in ('chicago', 'new york city', 'washington'):
+            print('')
+            break
+        else:
+            wrong_input()
+
+    # get user input for month (all, january, february, ... , june)
+    while True:
+        month = input("Please choose a month (January, February, March, April, May, June, or 'all'):")
+        if month.lower()  in ('january', 'february', 'march', 'april', 'may', 'june', 'all'):
+            print('')
+            break
+        else:
+            wrong_input()
+
+    # get user input for day of week (all, monday, tuesday, ... sunday)
+    while True:
+        day = input("Please choose a day of the week: (Monday, Tuesday, Wednesday, ..., or 'all'):")
+        if day.lower()  in ('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'all'):
+            print('')
+            break
+        else:
+            wrong_input()
+
+    print("-"*41)
+    return city.lower(), month.lower(), day.lower()
 
 
 ######## TO DO
 
-# filter: by month or day or not at all
 # if not all months/days, filter time stats function
 
+# fix wrong choice break
 # fix gender sorting
 # fix city reference in gender (WAS only)
-
-
-"""
-def month_choice:
-    while True:
-            # get user input for month (all, january, february, ... , june)
-            month = input("Please choose a month (January, February, March, April, May, June, or 'all'):")
-            if month.lower()  in ('january', 'february', 'march', 'april', 'may', 'june', 'all'):
-                print('')
-                break
-            else:
-                wrong_input()
-
-def day_choice:
-        while True:
-            day = input("Please choose a day of the week: (Monday, Tuesday, Wednesday, ..., or 'all'):")
-            if day.lower()  in ('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'all'):
-                print('')
-                break
-            else:
-                wrong_input()
-
-while True:
-    choice = input("Would you like to filter by month, day, or not at all (type 'none')?")
-    if choice.lower() = 'month':
-        month_choice()
-    else if choice.lower() = 'day':
-        day_choice()
-    else if choice.lower() = 'none':
-        break
-
-return city.lower(), month.lower(), day.lower()
-"""
-
-
-# def timestamp(start_time):
-#     """ outputs runtime at the end of a function """
-#     # start_time = time.time()
-#
-#     print("\nThis took %s seconds." % (time.time() - start_time))
-#     print("-"*41)
