@@ -32,6 +32,7 @@ def wrong_input():
 # fix restart function
 # fix month name outputs
 # fix gender sorting
+# fix city reference in gender (WAS only)
 
 
 """
